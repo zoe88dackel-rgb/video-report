@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>影视制作机构调研报告</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --high:hsl(157,48%,42%);
+  --mid:hsl(28,85%,38%);
+  --low:hsl(210,55%,42%);
+  --new:hsl(270,40%,48%);
+  --text:hsl(240,3%,13%);--text2:hsl(240,2%,42%);--text3:hsl(240,2%,58%);
+  --bg:hsl(240,4%,96%);--surface:hsl(0,0%,100%);
+  --accent:hsl(211,100%,42%);
+  --radius:18px;--shadow-sm:0 1px 2px hsl(240,3%,0%,.04);--shadow-md:0 4px 16px hsl(240,3%,0%,.06);--shadow-lg:0 12px 40px hsl(240,3%,0%,.08);
+}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.56}
+.wrapper{max-width:1200px;margin:0 auto;padding:0 24px 80px}
+
+/* Hero */
+.hero{padding:50px 0 30px}
+.hero::after{content:"";display:block;width:40px;height:3px;background:var(--accent);border-radius:3px;margin-top:16px}
+.hero .kicker{font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px}
+.hero h1{font-size:32px;font-weight:720;line-height:1.2;letter-spacing:-.01em}
+.hero .sub{font-size:14px;color:var(--text2);margin-top:10px}
+
+/* Tier Cards */
+.tier-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:36px 0 40px}
+.tier-card{
+  background:var(--surface);border-radius:var(--radius);padding:20px;
+  box-shadow:var(--shadow-sm);cursor:pointer;transition:transform .2s,box-shadow .2s
+}
+.tier-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.tier-card.active{border:2px solid var(--accent)}
+.tier-card .tier-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;margin-bottom:10px;display:inline-block}
+.tier-card .tier-badge.high{background:hsl(157,48%,92%);color:var(--high)}
+.tier-card .tier-badge.mid{background:hsl(28,85%,92%);color:var(--mid)}
+.tier-card .tier-badge.low{background:hsl(210,55%,92%);color:var(--low)}
+.tier-card .tier-badge.new{background:hsl(270,40%,92%);color:var(--new)}
+.tier-card .tier-count{font-size:26px;font-weight:700}
+.tier-card .tier-range{font-size:12px;color:var(--text3);margin-top:4px}
+.tier-card .tier-names{font-size:11px;color:var(--text3);margin-top:6px;line-height:1.4}
+
+/* Table */
+.table-shell{background:var(--surface);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);margin:24px 0}
+.table-scroll{overflow-x:auto}
+table{width:100%;min-width:900px;border-collapse:collapse}
+thead th{text-align:left;padding:14px 12px;font-size:11px;font-weight:500;color:var(--text);background:hsl(240,5%,97%);border-bottom:1px solid hsl(240,6%,90%);white-space:nowrap}
+thead th:first-child{min-width:80px;color:var(--text3)}
+thead th .col-tier{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+thead th .col-tier .dot{width:6px;height:6px;border-radius:50%}
+thead th .col-tier .dot.high{background:var(--high)}
+thead th .col-tier .dot.mid{background:var(--mid)}
+thead th .col-tier .dot.low{background:var(--low)}
+thead th .col-tier .dot.new{background:var(--new)}
+thead th .col-tier .tier-label{font-size:10px;opacity:.6}
+thead th .col-name{font-size:13px;font-weight:600;display:block}
+thead th.clickable{cursor:pointer}
+thead th.clickable:hover{background:hsl(240,5%,94%)}
+thead th .arrow{font-size:10px;color:var(--accent);margin-left:4px;opacity:0;transition:opacity .15s}
+thead th.clickable:hover .arrow{opacity:1}
+
+tbody td{padding:12px;font-size:13px;border-bottom:1px solid hsl(240,6%,93%)}
+tbody td:first-child{color:var(--text3);font-size:12px}
+tbody tr:last-child td{border-bottom:none}
+tbody td.clickable{cursor:pointer;color:var(--accent);font-weight:500}
+tbody td.clickable:hover{text-decoration:underline}
+
+/* Column hide */
+.col-hidden{display:none}
+
+/* Detail View */
+#detailView{display:none}
+#detailView.active{display:block}
+
+.back-btn{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--accent);font-weight:500;cursor:pointer;padding:16px 0}
+.back-btn:hover{opacity:.7}
+
+.detail-header{background:var(--surface);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow-sm);display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start}
+.detail-header .dh-left{flex:1;min-width:220px}
+.detail-header .tier-pill{font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;margin-bottom:12px;display:inline-block}
+.detail-header .tier-pill.high{background:hsl(157,48%,92%);color:var(--high)}
+.detail-header .tier-pill.mid{background:hsl(28,85%,92%);color:var(--mid)}
+.detail-header .tier-pill.low{background:hsl(210,55%,92%);color:var(--low)}
+.detail-header .tier-pill.new{background:hsl(270,40%,92%);color:var(--new)}
+.detail-header h2{font-size:22px;font-weight:700;margin:0 0 8px}
+.detail-header .dh-desc{font-size:13px;color:var(--text2);line-height:1.5}
+.detail-header .dh-price{font-size:32px;font-weight:700;color:var(--accent);margin-top:12px}
+.detail-header .dh-price small{font-size:13px;color:var(--text3);font-weight:400}
+
+/* Video */
+.video-block{margin-top:20px}
+.video-block .video-card{background:var(--surface);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm)}
+.video-block .video-stage{position:relative;background:#111;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center}
+.video-block video{width:100%;height:100%;object-fit:contain;display:block}
+.video-block .video-placeholder{color:hsl(240,5%,60%);font-size:13px;text-align:center;padding:20px}
+.video-block .video-placeholder img{max-width:100%;max-height:100%;object-fit:contain}
+.video-block .video-info{padding:14px 18px;border-top:1px solid hsl(240,6%,93%)}
+.video-block .video-info h4{font-size:13px;font-weight:600;margin-bottom:2px}
+.video-block .video-info p{font-size:12px;color:var(--text3)}
+
+/* Pricing */
+.pricing-block{margin-top:20px}
+.pricing-block .pricing-card{background:var(--surface);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm)}
+.pricing-block h3{font-size:15px;font-weight:600;margin-bottom:14px}
+.pricing-block table{width:auto}
+.pricing-block th,.pricing-block td{padding:8px 0;font-size:13px;border-bottom:1px solid hsl(240,6%,93%)}
+.pricing-block th{color:var(--text3);font-weight:400;padding-right:24px}
+.pricing-block td{font-weight:500}
+.pricing-block tr:last-child td,.pricing-block tr:last-child th{border-bottom:none}
+.pricing-block tr.total td{color:var(--accent);font-weight:700}
+.pricing-block .pricing-note{font-size:11px;color:var(--text3);margin-top:12px;padding-top:10px;border-top:1px solid hsl(240,6%,93%)}
+
+/* Insights */
+.insights{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.insights .insight{background:var(--surface);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow-sm)}
+.insights .insight h4{font-size:10px;font-weight:600;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.03em}
+.insights .insight p{font-size:13px;line-height:1.5}
+.insights .insight.pro{border-left:3px solid var(--high)}
+.insights .insight.con{border-left:3px solid hsl(0,55%,48%)}
+.insights .insight.fit{grid-column:1/-1;border-left:3px solid var(--accent)}
+
+.footer{text-align:center;padding:40px 0 0;margin-top:40px;border-top:1px solid hsl(240,6%,90%);font-size:12px;color:var(--text3)}
+
+@media(max-width:720px){
+  .tier-row{grid-template-columns:1fr}
+  .detail-header{padding:20px}
+  .hero h1{font-size:26px}
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<!-- 主视图 -->
+<div id="mainView">
+  <header class="hero">
+    <div class="kicker">Film Production</div>
+    <h1>影视制作机构调研报告</h1>
+    <p class="sub">共10家机构横向对比 · 点击机构名查看详情与视频</p>
+  </header>
+
+  <!-- 档位筛选 -->
+  <div class="tier-row">
+    <div class="tier-card" data-tier="high" onclick="filterByTier('high')">
+      <span class="tier-badge high">高档 · >6万</span>
+      <div class="tier-count">6 家</div>
+      <div class="tier-range">¥6万 — ¥28万</div>
+      <div class="tier-names">拾光猫 · 昂燃映画 · 历远文化 · 丹导影像 · 自橙壹派 · 宏影传媒</div>
+    </div>
+    <div class="tier-card" data-tier="mid" onclick="filterByTier('mid')">
+      <span class="tier-badge mid">中档 · 3-6万</span>
+      <div class="tier-count">3 家</div>
+      <div class="tier-range">¥4万 — ¥5-8万</div>
+      <div class="tier-names">粤视传媒 · 搗影社 · 飛驰摄影</div>
+    </div>
+    <div class="tier-card" data-tier="low" onclick="filterByTier('low')">
+      <span class="tier-badge low">低档 · <3万</span>
+      <div class="tier-count">1 家</div>
+      <div class="tier-range">¥1万</div>
+      <div class="tier-names">个人工作室</div>
+    </div>
+  </div>
+
+  <!-- 对比表格 -->
+  <div class="table-shell">
+    <div class="table-scroll">
+    <table id="mainTable">
+      <thead>
+        <tr>
+          <th></th>
+          <!-- 高档 -->
+          <th class="clickable" data-tier="high" data-idx="0" onclick="showDetail(0)">
+            <div class="col-tier"><span class="dot high"></span><span class="tier-label">高档</span></div>
+            <span class="col-name">拾光猫文化 <span class="arrow">→</span></span>
+          </th>
+          <th class="clickable" data-tier="high" data-idx="1" onclick="showDetail(1)">
+            <div class="col-tier"><span class="dot high"></span><span class="tier-label">高档</span></div>
+            <span class="col-name">昂燃映画 <span class="arrow">→</span></span>
+          </th>
+          <th class="clickable" data-tier="high" data-idx="2" onclick="showDetail(2)">
+            <div class="col-tier"><span class="dot high"></span><span class="tier-label">高档</span></div>
+            <span class="col-name">历远文化 <span class="arrow">→</span></span>
+          </th>
+          <th class="clickable" data-tier="high" data-idx="3" onclick="showDetail(3)">
+            <div class="col-tier"><span class="dot high"></span><span class="tier-label">高档</span></div>
+            <span class="col-name">丹导影像 <span class="arrow">→</span></span>
+          </th>
+          <th class="clickable" data-tier="high" data-idx="4" onclick="showDetail(4)">
+            <div class="col-tier"><span class="dot high"></span><span class="tier-label">高档</span></div>
+            <span class="col-name">自橙壹派 <span class="arrow">→</span></span>
+          </th>
+          <th class="clickable" data-tier="high" data-idx="5" onclick="showDetail(5)">
+            <div class="col-tier"><span class="dot high"></span><span class="tier-label">高档</span></div>
+            <span class="col-name">宏影传媒 <span class="arrow">→</span></span>
+          </th>
+          <!-- 中档 -->
+          <th class="clickable" data-tier="mid" data-idx="6" onclick="showDetail(6)">
+            <div class="col-tier"><span class="dot mid"></span><span class="tier-label">中档</span></div>
+            <span class="col-name">粤视传媒 <span class="arrow">→</span></span>
+          </th>
+          <th class="clickable" data-tier="mid" data-idx="7" onclick="showDetail(7)">
+            <div class="col-tier"><span class="dot mid"></span><span class="tier-label">中档</span></div>
+            <span class="col-name">搗影社 <span class="arrow">→</span></span>
+          </th>
+          <th class="clickable" data-tier="mid" data-idx="8" onclick="showDetail(8)">
+            <div class="col-tier"><span class="dot mid"></span><span class="tier-label">中档</span></div>
+            <span class="col-name">飛驰摄影 <span class="arrow">→</span></span>
+          </th>
+          <!-- 低档 -->
+          <th class="clickable" data-tier="low" data-idx="9" onclick="showDetail(9)">
+            <div class="col-tier"><span class="dot low"></span><span class="tier-label">低档</span></div>
+            <span class="col-name">个人工作室 <span class="arrow">→</span></span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>报价</td>
+          <td class="clickable" onclick="showDetail(0)">¥28 万</td>
+          <td class="clickable" onclick="showDetail(1)">¥7 万</td>
+          <td class="clickable" onclick="showDetail(2)">¥7 万</td>
+          <td class="clickable" onclick="showDetail(3)">¥6 万</td>
+          <td class="clickable" onclick="showDetail(4)">¥10 万</td>
+          <td class="clickable" onclick="showDetail(5)">¥10 万</td>
+          <td class="clickable" onclick="showDetail(6)">¥5 万</td>
+          <td class="clickable" onclick="showDetail(7)">¥5-8 万</td>
+          <td class="clickable" onclick="showDetail(8)">¥4 万</td>
+          <td class="clickable" onclick="showDetail(9)">¥1 万</td>
+        </tr>
+        <tr>
+          <td>视频文件</td>
+          <td>A-(28w).mp4<br><small>25.6 MB</small></td>
+          <td>B-(7w).mp4<br><small>263 MB</small></td>
+          <td>C-(7w).mp4<br><small>307 MB</small></td>
+          <td>G-(6w).mp4<br><small>140 MB</small></td>
+          <td>J-(10w).mp4<br><small>129.5 MB</small></td>
+          <td>F-(未定).mp4<br><small>35.5 MB</small></td>
+          <td>D-(5w).mp4<br><small>305 MB</small></td>
+          <td>E-(5-8w).mp4<br><small>994 MB</small></td>
+          <td>H-(4w).mp4<br><small>8.4 MB</small></td>
+          <td>I-(1w).mp4<br><small>22.4 MB</small></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <footer class="footer">品牌部 · 影视制作机构调研 · 更新于2026年5月21日</footer>
+</div>
+
+<!-- 详情视图 -->
+<div id="detailView">
+  <div class="back-btn" onclick="hideDetail()">← 返回对比表格</div>
+  <div id="detailContent"></div>
+</div>
+
+</div>
+
+<script>
+// 机构数据 - 按正确分级排列
+const agencies = [
+  // === 高档 (>=6万) ===
+  { idx:0, name:'拾光猫文化', tier:'high', price:'¥28 万', desc:'品牌大片 / TVC级制作 · 后期特效见长', 
+    file:'A-拾光猫文化(28w)/A-(28w).mp4', poster:'A-拾光猫文化(28w)/poster.jpg', size:'25.6 MB',
+    pros:'后期特效行业领先，导演团队成熟', cons:'预算门槛高，需提前预约', fit:'适合高端品牌大片' },
+  { idx:1, name:'昂燃映画', tier:'high', price:'¥7 万', desc:'品牌片 / 大客户经验丰富', 
+    file:'B-昂燃映画(7w)/B-(7w).mp4', poster:'B-昂燃映画(7w)/poster.jpg', size:'263 MB',
+    pros:'服务珠免集团、华为等专业客户', cons:'位于成都，异地有差旅成本', fit:'适合需要大客户背书的企业' },
+  { idx:2, name:'历远文化', tier:'high', price:'¥7 万', desc:'新增机构 · 待调研', 
+    file:'C-历远文化(7w)/C-(7w).mp4', poster:'C-历远文化(7w)/poster.jpg', size:'307 MB',
+    pros:'待评估', cons:'待评估', fit:'待评估' },
+  { idx:3, name:'丹导影像', tier:'high', price:'¥6 万', desc:'物流行业经验 · 中型宣传片', 
+    file:'G-丹导影像(6w)/G-(6w).mp4', poster:'G-丹导影像(6w)/poster.jpg', size:'140 MB',
+    pros:'物流行业案例丰富', cons:'案例相对集中', fit:'适合物流供应链企业' },
+  { idx:4, name:'自橙壹派', tier:'high', price:'¥10 万', desc:'新增机构 · 待调研', 
+    file:'J-自橙壹派(10w)/J-(10w).mp4', poster:'J-自橙壹派(10w)/poster.jpg', size:'129.5 MB',
+    pros:'待评估', cons:'待评估', fit:'待评估' },
+  { idx:5, name:'宏影传媒', tier:'high', price:'¥10 万', desc:'品牌片 · 中高端制作', 
+    file:'F-宏影传媒（10w）/F-(未定).mp4', poster:'F-宏影传媒（10w）/poster.jpg', size:'35.5 MB',
+    pros:'待评估', cons:'待评估', fit:'待评估' },
+  // === 中档 (3-6万) ===
+  { idx:6, name:'粤视传媒', tier:'mid', price:'¥5 万', desc:'政务类宣传 · 中铁合作经验', 
+    file:'D-粤视传媒(5w)/D-(5w).mp4', poster:'D-粤视传媒(5w)/poster.jpg', size:'305 MB',
+    pros:'政务类经验丰富，交片快', cons:'风格偏政务', fit:'适合国企政府部门' },
+  { idx:7, name:'搗影社', tier:'mid', price:'¥5-8 万', desc:'价格区间灵活', 
+    file:'E-捣影社(5-8w)/E-(5-8w).mp4', poster:'E-捣影社(5-8w)/poster.jpg', size:'994 MB',
+    pros:'可根据预算调整方案', cons:'文件较大，加载慢', fit:'适合预算弹性项目' },
+  { idx:8, name:'飛驰摄影', tier:'mid', price:'¥4 万', desc:'性价比优', 
+    file:'H-飛驰摄影(4w)/H-(4w).mp4', poster:'H-飛驰摄影(4w)/poster.jpg', size:'8.4 MB',
+    pros:'价格实惠', cons:'暂无视频样片', fit:'待评估' },
+  // === 低档 (<3万) ===
+  { idx:9, name:'个人工作室', tier:'low', price:'¥1 万', desc:'基础拍摄 · 灵活', 
+    file:'I-个人工作室(1w)/I-(1w).mp4', poster:'I-个人工作室(1w)/poster.jpg', size:'22.4 MB',
+    pros:'价格极低，沟通灵活', cons:'设备有限', fit:'适合短视频、基础宣传' },
+];
+
+// 显示详情
+function showDetail(idx) {
+  const a = agencies[idx];
+  if (!a) return;
+  
+  let h = '<div class="detail-header">';
+  h += '<div>';
+  h += '<span class="tier-pill ' + a.tier + '">' + (a.tier==='high'?'高档':a.tier==='mid'?'中档':'低档') + '</span>';
+  h += '<h2>' + a.name + '</h2>';
+  h += '<div class="dh-desc">' + a.desc + '</div>';
+  h += '<div class="dh-price">' + a.price + '</div>';
+  h += '</div></div>';
+  
+  // 视频
+  h += '<div class="video-block"><div class="video-card">';
+  h += '<div class="video-stage">';
+  if (a.file) {
+    h += '<video controls playsinline preload="metadata"';
+    if (a.poster) h += ' poster="' + a.poster + '"';
+    h += '><source src="' + a.file + '" type="video/mp4"></video>';
+  } else {
+    h += '<div class="video-placeholder">暂无视频</div>';
+  }
+  h += '</div>';
+  h += '<div class="video-info"><h4>' + a.file + '</h4><p>文件大小: ' + a.size + '</p></div>';
+  h += '</div></div>';
+  
+  // 优势
+  h += '<div class="insights">';
+  h += '<div class="insight pro"><h4>优势</h4><p>' + a.pros + '</p></div>';
+  h += '<div class="insight con"><h4>注意</h4><p>' + a.cons + '</p></div>';
+  h += '<div class="insight fit"><h4>适用场景</h4><p>' + a.fit + '</p></div>';
+  h += '</div>';
+  
+  document.getElementById('detailContent').innerHTML = h;
+  document.getElementById('mainView').style.display = 'none';
+  document.getElementById('detailView').classList.add('active');
+}
+
+function hideDetail() {
+  document.getElementById('mainView').style.display = '';
+  document.getElementById('detailView').classList.remove('active');
+}
+
+// 筛选
+function filterByTier(tier) {
+  const ths = document.querySelectorAll('#mainTable thead th');
+  const tds = document.querySelectorAll('#mainTable tbody tr:first-child td');
+  
+  document.querySelectorAll('.tier-card').forEach(c => c.classList.remove('active'));
+  document.querySelector('.tier-card[data-tier="'+tier+'"]').classList.add('active');
+  
+  // 第1列是标题，从第2列开始
+  for (let i = 1; i < ths.length; i++) {
+    const isMatch = ths[i].dataset.tier === tier;
+    ths[i].classList.toggle('col-hidden', !isMatch);
+    if (tds[i]) tds[i].classList.toggle('col-hidden', !isMatch);
+  }
+  
+  // 处理第二行的td
+  const tds2 = document.querySelectorAll('#mainTable tbody tr:nth-child(2) td');
+  for (let i = 1; i < tds2.length; i++) {
+    const isMatch = ths[i] && ths[i].dataset.tier === tier;
+    tds2[i].classList.toggle('col-hidden', !isMatch);
+  }
+}
+</script>
+</body>
+</html>
