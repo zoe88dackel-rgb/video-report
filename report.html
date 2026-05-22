@@ -62,6 +62,19 @@ thead th.clickable:hover{background:hsl(240,5%,94%)}
 thead th .arrow{font-size:10px;color:var(--accent);margin-left:4px;opacity:0;transition:opacity .15s}
 thead th.clickable:hover .arrow{opacity:1}
 
+/* Editable cells */
+thead th[contenteditable="true"]:focus,
+tbody td[contenteditable="true"]:focus {
+  outline: 2px solid var(--accent);
+  background-color: hsl(211, 100%, 97%);
+  border-radius: 4px;
+}
+thead th[contenteditable="true"]:hover,
+tbody td[contenteditable="true"]:hover {
+  outline: 1px dashed hsl(211, 100%, 70%);
+  background-color: hsl(211, 100%, 99%);
+}
+
 tbody td{padding:12px;font-size:13px;border-bottom:1px solid hsl(240,6%,93%)}
 tbody td:first-child{color:var(--text3);font-size:12px}
 tbody tr:last-child td{border-bottom:none}
@@ -172,45 +185,45 @@ tbody td.clickable:hover{text-decoration:underline}
         <tr>
           <th></th>
           <!-- 高档 -->
-          <th class="clickable" data-tier="high" data-idx="0" onclick="showDetail(0)">
+          <th contenteditable="true" class="clickable" data-tier="high" data-idx="0" onclick="showDetail(0)">
             <div class="col-tier"><span class="dot high"></span><span class="tier-label">高档</span></div>
             <span class="col-name">拾光猫文化 <span class="arrow">→</span></span>
           </th>
-          <th class="clickable" data-tier="high" data-idx="1" onclick="showDetail(1)">
+          <th contenteditable="true" class="clickable" data-tier="high" data-idx="1" onclick="showDetail(1)">
             <div class="col-tier"><span class="dot high"></span><span class="tier-label">高档</span></div>
             <span class="col-name">昂燃映画 <span class="arrow">→</span></span>
           </th>
-          <th class="clickable" data-tier="high" data-idx="2" onclick="showDetail(2)">
+          <th contenteditable="true" class="clickable" data-tier="high" data-idx="2" onclick="showDetail(2)">
             <div class="col-tier"><span class="dot high"></span><span class="tier-label">高档</span></div>
             <span class="col-name">历远文化 <span class="arrow">→</span></span>
           </th>
-          <th class="clickable" data-tier="high" data-idx="3" onclick="showDetail(3)">
+          <th contenteditable="true" class="clickable" data-tier="high" data-idx="3" onclick="showDetail(3)">
             <div class="col-tier"><span class="dot high"></span><span class="tier-label">高档</span></div>
             <span class="col-name">丹导影像 <span class="arrow">→</span></span>
           </th>
-          <th class="clickable" data-tier="high" data-idx="4" onclick="showDetail(4)">
+          <th contenteditable="true" class="clickable" data-tier="high" data-idx="4" onclick="showDetail(4)">
             <div class="col-tier"><span class="dot high"></span><span class="tier-label">高档</span></div>
             <span class="col-name">自橙壹派 <span class="arrow">→</span></span>
           </th>
-          <th class="clickable" data-tier="high" data-idx="5" onclick="showDetail(5)">
+          <th contenteditable="true" class="clickable" data-tier="high" data-idx="5" onclick="showDetail(5)">
             <div class="col-tier"><span class="dot high"></span><span class="tier-label">高档</span></div>
             <span class="col-name">宏影传媒 <span class="arrow">→</span></span>
           </th>
           <!-- 中档 -->
-          <th class="clickable" data-tier="mid" data-idx="6" onclick="showDetail(6)">
+          <th contenteditable="true" class="clickable" data-tier="mid" data-idx="6" onclick="showDetail(6)">
             <div class="col-tier"><span class="dot mid"></span><span class="tier-label">中档</span></div>
             <span class="col-name">粤视传媒 <span class="arrow">→</span></span>
           </th>
-          <th class="clickable" data-tier="mid" data-idx="7" onclick="showDetail(7)">
+          <th contenteditable="true" class="clickable" data-tier="mid" data-idx="7" onclick="showDetail(7)">
             <div class="col-tier"><span class="dot mid"></span><span class="tier-label">中档</span></div>
             <span class="col-name">搗影社 <span class="arrow">→</span></span>
           </th>
-          <th class="clickable" data-tier="mid" data-idx="8" onclick="showDetail(8)">
+          <th contenteditable="true" class="clickable" data-tier="mid" data-idx="8" onclick="showDetail(8)">
             <div class="col-tier"><span class="dot mid"></span><span class="tier-label">中档</span></div>
             <span class="col-name">飛驰摄影 <span class="arrow">→</span></span>
           </th>
           <!-- 低档 -->
-          <th class="clickable" data-tier="low" data-idx="9" onclick="showDetail(9)">
+          <th contenteditable="true" class="clickable" data-tier="low" data-idx="9" onclick="showDetail(9)">
             <div class="col-tier"><span class="dot low"></span><span class="tier-label">低档</span></div>
             <span class="col-name">个人工作室 <span class="arrow">→</span></span>
           </th>
@@ -219,16 +232,16 @@ tbody td.clickable:hover{text-decoration:underline}
       <tbody>
         <tr>
           <td>报价</td>
-          <td class="clickable" onclick="showDetail(0)">¥28 万</td>
-          <td class="clickable" onclick="showDetail(1)">¥7 万</td>
-          <td class="clickable" onclick="showDetail(2)">¥7 万</td>
-          <td class="clickable" onclick="showDetail(3)">¥6 万</td>
-          <td class="clickable" onclick="showDetail(4)">¥10 万</td>
-          <td class="clickable" onclick="showDetail(5)">¥10 万</td>
-          <td class="clickable" onclick="showDetail(6)">¥5 万</td>
-          <td class="clickable" onclick="showDetail(7)">¥5-8 万</td>
-          <td class="clickable" onclick="showDetail(8)">¥4 万</td>
-          <td class="clickable" onclick="showDetail(9)">¥1 万</td>
+          <td class="clickable" contenteditable="true" onclick="showDetail(0)">¥28 万</td>
+          <td class="clickable" contenteditable="true" onclick="showDetail(1)">¥7 万</td>
+          <td class="clickable" contenteditable="true" onclick="showDetail(2)">¥7 万</td>
+          <td class="clickable" contenteditable="true" onclick="showDetail(3)">¥6 万</td>
+          <td class="clickable" contenteditable="true" onclick="showDetail(4)">¥10 万</td>
+          <td class="clickable" contenteditable="true" onclick="showDetail(5)">¥10 万</td>
+          <td class="clickable" contenteditable="true" onclick="showDetail(6)">¥5 万</td>
+          <td class="clickable" contenteditable="true" onclick="showDetail(7)">¥5-8 万</td>
+          <td class="clickable" contenteditable="true" onclick="showDetail(8)">¥4 万</td>
+          <td class="clickable" contenteditable="true" onclick="showDetail(9)">¥1 万</td>
         </tr>
         <tr>
           <td>视频文件</td>
@@ -264,36 +277,36 @@ tbody td.clickable:hover{text-decoration:underline}
 const agencies = [
   // === 高档 (>=6万) ===
   { idx:0, name:'拾光猫文化', tier:'high', price:'¥28 万', desc:'品牌大片 / TVC级制作 · 后期特效见长', 
-    file:'A-拾光猫文化(28w)/A-(28w).mp4', poster:'A-拾光猫文化(28w)/poster.jpg', size:'25.6 MB',
+    file:'https://github.com/zoe88dackel-rgb/video-report/releases/download/v1.0/A-.28w.mp4', poster:'A-拾光猫文化(28w)/poster.jpg', size:'25.6 MB',
     pros:'后期特效行业领先，导演团队成熟', cons:'预算门槛高，需提前预约', fit:'适合高端品牌大片' },
   { idx:1, name:'昂燃映画', tier:'high', price:'¥7 万', desc:'品牌片 / 大客户经验丰富', 
-    file:'B-昂燃映画(7w)/B-(7w).mp4', poster:'B-昂燃映画(7w)/poster.jpg', size:'263 MB',
+    file:'https://github.com/zoe88dackel-rgb/video-report/releases/download/v1.0/B-.7w.mp4', poster:'B-昂燃映画(7w)/poster.jpg', size:'263 MB',
     pros:'服务珠免集团、华为等专业客户', cons:'位于成都，异地有差旅成本', fit:'适合需要大客户背书的企业' },
   { idx:2, name:'历远文化', tier:'high', price:'¥7 万', desc:'新增机构 · 待调研', 
-    file:'C-历远文化(7w)/C-(7w).mp4', poster:'C-历远文化(7w)/poster.jpg', size:'307 MB',
+    file:'https://github.com/zoe88dackel-rgb/video-report/releases/download/v1.0/C-.7w.mp4', poster:'C-历远文化(7w)/poster.jpg', size:'307 MB',
     pros:'待评估', cons:'待评估', fit:'待评估' },
   { idx:3, name:'丹导影像', tier:'high', price:'¥6 万', desc:'物流行业经验 · 中型宣传片', 
-    file:'G-丹导影像(6w)/G-(6w).mp4', poster:'G-丹导影像(6w)/poster.jpg', size:'140 MB',
+    file:'https://github.com/zoe88dackel-rgb/video-report/releases/download/v1.0/G-.6w.mp4', poster:'G-丹导影像(6w)/poster.jpg', size:'140 MB',
     pros:'物流行业案例丰富', cons:'案例相对集中', fit:'适合物流供应链企业' },
   { idx:4, name:'自橙壹派', tier:'high', price:'¥10 万', desc:'新增机构 · 待调研', 
-    file:'J-自橙壹派(10w)/J-(10w).mp4', poster:'J-自橙壹派(10w)/poster.jpg', size:'129.5 MB',
+    file:'https://github.com/zoe88dackel-rgb/video-report/releases/download/v1.0/J-.10w.mp4', poster:'J-自橙壹派(10w)/poster.jpg', size:'129.5 MB',
     pros:'待评估', cons:'待评估', fit:'待评估' },
   { idx:5, name:'宏影传媒', tier:'high', price:'¥10 万', desc:'品牌片 · 中高端制作', 
-    file:'F-宏影传媒（10w）/F-(未定).mp4', poster:'F-宏影传媒（10w）/poster.jpg', size:'35.5 MB',
+    file:'https://github.com/zoe88dackel-rgb/video-report/releases/download/v1.0/F-.mp4', poster:'F-宏影传媒（10w）/poster.jpg', size:'35.5 MB',
     pros:'待评估', cons:'待评估', fit:'待评估' },
   // === 中档 (3-6万) ===
   { idx:6, name:'粤视传媒', tier:'mid', price:'¥5 万', desc:'政务类宣传 · 中铁合作经验', 
-    file:'D-粤视传媒(5w)/D-(5w).mp4', poster:'D-粤视传媒(5w)/poster.jpg', size:'305 MB',
+    file:'https://github.com/zoe88dackel-rgb/video-report/releases/download/v1.0/D-.5w.mp4', poster:'D-粤视传媒(5w)/poster.jpg', size:'305 MB',
     pros:'政务类经验丰富，交片快', cons:'风格偏政务', fit:'适合国企政府部门' },
   { idx:7, name:'搗影社', tier:'mid', price:'¥5-8 万', desc:'价格区间灵活', 
     file:'E-捣影社(5-8w)/E-(5-8w).mp4', poster:'E-捣影社(5-8w)/poster.jpg', size:'994 MB',
     pros:'可根据预算调整方案', cons:'文件较大，加载慢', fit:'适合预算弹性项目' },
   { idx:8, name:'飛驰摄影', tier:'mid', price:'¥4 万', desc:'性价比优', 
-    file:'H-飛驰摄影(4w)/H-(4w).mp4', poster:'H-飛驰摄影(4w)/poster.jpg', size:'8.4 MB',
+    file:'https://github.com/zoe88dackel-rgb/video-report/releases/download/v1.0/H-.4w.mp4', poster:'H-飛驰摄影(4w)/poster.jpg', size:'8.4 MB',
     pros:'价格实惠', cons:'暂无视频样片', fit:'待评估' },
   // === 低档 (<3万) ===
   { idx:9, name:'个人工作室', tier:'low', price:'¥1 万', desc:'基础拍摄 · 灵活', 
-    file:'I-个人工作室(1w)/I-(1w).mp4', poster:'I-个人工作室(1w)/poster.jpg', size:'22.4 MB',
+    file:'https://github.com/zoe88dackel-rgb/video-report/releases/download/v1.0/I-.1w.mp4', poster:'I-个人工作室(1w)/poster.jpg', size:'22.4 MB',
     pros:'价格极低，沟通灵活', cons:'设备有限', fit:'适合短视频、基础宣传' },
 ];
 
